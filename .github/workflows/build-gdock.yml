@@ -30,7 +30,8 @@ jobs:
           sudo rm -rf \
             /usr/share/dotnet \
             /etc/mysql \
-            /etc/php
+            /etc/php \
+            /opt/az
           sudo -E apt-get -y purge \
             azure-cli \
             ghc* \
@@ -42,8 +43,12 @@ jobs:
             dotnet* \
             powershell \
             openjdk* \
-            mysql* \
             php*
+          sudo apt-get update --fix-missing
+          sudo apt-get autoremove && sudo apt-get clean && sudo apt-get install -f
+          sudo -E apt-get -y purge \
+              mysql-community-client \
+              mysql-community-server
           sudo -E apt-get update
           sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler u-boot-tools gcc-multilib g++-multilib antlr3 gperf
           sudo -E apt-get -y autoremove --purge
